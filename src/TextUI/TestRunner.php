@@ -452,10 +452,9 @@ final class TestRunner extends BaseTestRunner
             $codeCoverageReports = 0;
         }
 
+        $whitelistFromConfigurationFile = false;
+        $whitelistFromOption = false;
         if ($codeCoverageReports > 0 || isset($arguments['xdebugFilterFile'])) {
-            $whitelistFromConfigurationFile = false;
-            $whitelistFromOption            = false;
-
             if (isset($arguments['whitelist'])) {
                 $this->codeCoverageFilter->addDirectoryToWhitelist($arguments['whitelist']);
 
@@ -638,7 +637,7 @@ final class TestRunner extends BaseTestRunner
                     $this->codeCoverageGenerationSucceeded();
 
                     unset($writer);
-                } catch (CodeCoverageException $e) {
+                } catch (\RuntimeException $e) {
                     $this->codeCoverageGenerationFailed($e);
                 }
             }
@@ -653,7 +652,7 @@ final class TestRunner extends BaseTestRunner
                     $this->codeCoverageGenerationSucceeded();
 
                     unset($writer);
-                } catch (CodeCoverageException $e) {
+                } catch (\RuntimeException $e) {
                     $this->codeCoverageGenerationFailed($e);
                 }
             }
